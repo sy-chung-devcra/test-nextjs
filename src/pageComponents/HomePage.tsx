@@ -4,6 +4,7 @@ import { FormEventHandler, useEffect, useState } from 'react';
 
 export default function HomePage() {
   const [data, setData] = useState<string>('');
+  const [res, setRes] = useState();
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ export default function HomePage() {
       .then((res) => res.json())
       .then((data) => {
         console.log('Success api', data);
+        setRes(data.data);
       })
       .catch((err) => console.error('Failure', err));
   };
@@ -36,6 +38,7 @@ export default function HomePage() {
       <div>form</div>
 
       <form onSubmit={handleSubmit}>
+        <span>input: </span>
         <input
           className="border border-gray-300 py-1 px-2"
           type="text"
@@ -48,6 +51,8 @@ export default function HomePage() {
           submit
         </button>
       </form>
+
+      <div>Response: {res && res}</div>
     </>
   );
 }
